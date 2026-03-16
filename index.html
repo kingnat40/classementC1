@@ -64,11 +64,10 @@
 <table>
     <thead>
         <tr>
-            <th>B</th>
-            <th>C</th>
-            <th>D</th>
-            <th>E</th>
-            <th>F</th>
+            <th>Participant</th>
+            <th>Chrono</th>
+            <th>Date</th>
+            <th>Véhicule</th>
         </tr>
     </thead>
     <tbody id="table-body">
@@ -76,11 +75,7 @@
 </table>
 
 <script>
-const sheetURL = "https://docs.google.com/spreadsheets/d/1NRnLwkl-dGJcuB8Y53r7DFwbQ5k1ucA_PRkWKsfLLr4/gviz/tq?tqx=out:json&tq=select+*&sheet=CIRCUIT1";
-
-
-
-
+const sheetURL = "https://docs.google.com/spreadsheets/d/1NRnLwkl-dGJcuB8Y53r7DFwbQ5k1ucA_PRkWKsfLLr4/gviz/tq?tqx=out:json&tq=select+B,C,D,E+where+row+>=+8+and+row+<=+32&sheet=CIRCUIT1";
 
 async function loadData() {
     const response = await fetch(sheetURL);
@@ -90,14 +85,14 @@ async function loadData() {
     const tbody = document.getElementById("table-body");
     tbody.innerHTML = "";
 
-    // Lire toutes les lignes existantes
     for (let i = 0; i < json.table.rows.length; i++) {
         const row = json.table.rows[i].c;
         if (!row) continue;
 
         const tr = document.createElement("tr");
 
-        for (let col = 1; col <= 5; col++) {
+        // Colonnes B → E = index 0 → 3
+        for (let col = 0; col < 4; col++) {
             const td = document.createElement("td");
             td.textContent = row[col]?.v || "";
             tr.appendChild(td);
@@ -106,7 +101,6 @@ async function loadData() {
         tbody.appendChild(tr);
     }
 }
-
 
 loadData();
 setInterval(loadData, 5000);
