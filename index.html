@@ -90,9 +90,9 @@ async function loadData() {
     const tbody = document.getElementById("table-body");
     tbody.innerHTML = "";
 
-    // Lignes 8 à 18 → index 7 à 17
-    for (let i = 7; i <= 17; i++) {
-        const row = json.table.rows[i]?.c;
+    // Lire toutes les lignes existantes
+    for (let i = 0; i < json.table.rows.length; i++) {
+        const row = json.table.rows[i].c;
         if (!row) continue;
 
         const tr = document.createElement("tr");
@@ -106,6 +106,7 @@ async function loadData() {
         tbody.appendChild(tr);
     }
 }
+
 
 loadData();
 setInterval(loadData, 5000);
